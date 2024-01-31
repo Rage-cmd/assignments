@@ -7,8 +7,12 @@
     let todoState = [];
     let oldTodoState = [];
 
-    function addTodoToDom() {
-      
+    function addTodoToDom(todo) {
+      const todos = document.getElementById('todos');
+      const title = document.createElement('H1');
+      var text = document.createTextNode(todo.title);
+      title.appendChild(title);
+      todos.appendChild()
     }
 
     function removeTodoFromDom(todo) {
@@ -19,18 +23,51 @@
         
     }
 
+    function createMap(todos) {
+      let map = {};
+      for(let i = 0; i < todos.length; ++i) {
+        map[todos[i].id] =  todos[i] ? todos[i] + 1 : 0;
+      }
+      return map;
+    }
+
     function updateState(newTodos) {
       // calculate the diff b/w newTodos and oldTodos.
       // More specifically, find out what todos are - 
       // 1. added
       // 2. deleted
       // 3. updated
+      var oldMap = createMap(oldTodoState);
+      var newMap = createMap(newTodos);
+
       const added = [];
       const deleted = [];
       const updated = [];
+
+      for(const id in oldMap) {
+        if(oldMap[id] == newMap[id]) {
+          if((oldTodoState[id].title != newTodos[id].title) || (oldTodoState[id].description != newTodos[id].description)) {
+            updated.push(newTodos[id]);
+          }
+          delete oldMap[id];
+          delete newMap[id];
+        }
+      }
+
+      for(const id in oldMap) {
+        deleted.push(oldTodoState[id]);
+      }
+
+      for(const id in newMap) {
+        added.push(newTodos[id]);
+      }
+
       // calculate these 3 arrays
       // call addTodo, removeTodo, updateTodo functions on each of the
       // elements
+      addTodo.map((element) => {
+        addTodoToDom(ele);
+      })
       oldTodoState = newTodos;
     }
 
